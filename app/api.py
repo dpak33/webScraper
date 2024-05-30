@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from webscraper import scrape_jobs
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/api/jobs', methods=['GET'])
 def get_jobs():
