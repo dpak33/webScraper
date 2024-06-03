@@ -4,8 +4,10 @@ import json
 import time
 
 
-def scrape_jobs(query):
+def scrape_jobs(query, location=None):
     url = f"https://remoteok.com/remote-{query}-jobs"
+    if location:
+        url += f"?location={location}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     }
@@ -37,7 +39,7 @@ def scrape_jobs(query):
         title = job_card.find('h2', itemprop='title').text.strip()
         company = job_card.find('h3', itemprop='name').text.strip()
         location = job_card.find_all('div', class_='location')[0].text.strip() if job_card.find_all('div',
-                                                                                                    class_='location') else "Remote"
+                                                                                                   class_='location') else "Remote"
 
         # Extract the job summary from the JSON data embedded in the <script> tag
         script_tag = job_card.find('script', type='application/ld+json')
@@ -65,9 +67,5 @@ def scrape_jobs(query):
 
 
 # If you want to run the scraper standalone, you can add this block
-if __name__ == '__main__':
-    query = "developer"
-    jobs_result = scrape_jobs(query)
-    for job in jobs_result:
-        print(
-            f"Title: {job['title']}, Company: {job['company']}, Location: {job['location']}, Salary: {job['salary']}, Summary: {job['summary']}")
+
+
