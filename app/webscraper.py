@@ -64,8 +64,3 @@ def scrape_jobs(query, location=None):
 
     print(f"Jobs found: {len(jobs_list)}")
     return jobs_list
-
-
-# If you want to run the scraper standalone, you can add this block
-
-
